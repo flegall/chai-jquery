@@ -7,4 +7,9 @@ describe("jQuery.fn.inspect", function(){
     $('<div class="foo"><one><two><three></three></two><two>Three</two></one></div>').inspect(2)
       .should.equal('<div class="foo"><one><two>...</two><two>...</two></one></div>');
   });
+
+  it("returns the selector when nothing matched", function() {
+    $('something.that-cant-exist').inspect().should.equal('something.that-cant-exist');
+    $('something.that-cant-exist').inspect(42).should.equal('something.that-cant-exist');
+  });
 });

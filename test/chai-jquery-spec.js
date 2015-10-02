@@ -2,7 +2,7 @@ describe("jQuery assertions", function(){
   var inspect;
 
   chai.use(function (chai, utils) {
-    inspect = utils.objDisplay;
+    inspect = utils.inspect;
 
     chai.Assertion.addMethod('fail', function (message) {
       var obj = utils.flag(this, 'object');
@@ -79,6 +79,22 @@ describe("jQuery assertions", function(){
         (function(){
           subject.should.not.have.attr('name', 'foo');
         }).should.fail("expected " + inspect(subject) + " not to have a 'name' attribute with the value 'foo'")
+      });
+    });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $('<div><div id="close-button" contenteditable="true"></div></div>').find('#close-button');
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.attr('contenteditable', 'false');
+        }).should.fail("expected '#close-button' to have a 'contenteditable' attribute with the value 'false', but the value was 'true'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.attr('contenteditable', 'true');
+        }).should.fail("expected '#close-button' not to have a 'contenteditable' attribute with the value 'true'");
       });
     });
 
@@ -206,6 +222,22 @@ describe("jQuery assertions", function(){
       });
     });
 
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $('<div><div id="close-button" style="position:absolute;"></div></div>').find('#close-button');
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.css('position', 'relative');
+        }).should.fail("expected '#close-button' to have a 'position' CSS property with the value 'relative', but the value was 'absolute'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.css('position', 'absolute');
+        }).should.fail("expected '#close-button' not to have a 'position' CSS property with the value 'absolute'");
+      });
+    });
+
     it("chains", function(){
       subject.should.have.css('position').equal('absolute');
     });
@@ -298,6 +330,22 @@ describe("jQuery assertions", function(){
       });
     });
 
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $('<div><input type="checkbox" checked/></div>').find('input[type="checkbox"]');
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.prop('fulfilled');
+        }).should.fail("expected 'input[type=\"checkbox\"]' to have a 'fulfilled' property");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.prop('checked', true);
+        }).should.fail("expected 'input[type=\"checkbox\"]' not to have a 'checked' property with the value true");
+      });
+    });
+
     it("chains", function(){
       subject.should.have.prop('checked').equal(true);
     });
@@ -324,6 +372,22 @@ describe("jQuery assertions", function(){
       (function(){
         subject.should.not.have.class('foo');
       }).should.fail("expected " + inspect(subject) + " not to have class 'foo'");
+    });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $("<div><span id='click-button' class='hint'>Click me</span></div>").find("#click-button");
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.class("label");
+        }).should.fail("expected '#click-button' to have class 'label'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.class("hint");
+        }).should.fail("expected '#click-button' not to have class 'hint'");
+      });
     });
   });
 
@@ -360,6 +424,22 @@ describe("jQuery assertions", function(){
         subject.should.have.id('foo');
       }).should.fail("expected " + inspect(subject) + " to have id 'foo'");
     });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $("<div><span id='click-button' class='hint'>Click me</span></div>").find(".hint");
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.id("click-link");
+        }).should.fail("expected '.hint' to have id 'click-link'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.id("click-button");
+        }).should.fail("expected '.hint' not to have id 'click-button'");
+      });
+    });
   });
 
   describe("html", function(){
@@ -383,6 +463,22 @@ describe("jQuery assertions", function(){
       (function(){
         subject.should.not.have.html("<span>span</span>");
       }).should.fail("expected " + inspect(subject) + " not to have HTML '<span>span</span>'");
+    });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $("<div><span id='hint'>Click me</span></div>").find("#hint");
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.html("Double-click me");
+        }).should.fail("expected '#hint' to have HTML 'Double-click me', but the HTML was 'Click me'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.html("Click me");
+        }).should.fail("expected '#hint' not to have HTML 'Click me'");
+      });
     });
   });
 
@@ -408,6 +504,22 @@ describe("jQuery assertions", function(){
         subject.should.not.have.text("foo");
       }).should.fail("expected " + inspect(subject) + " not to have text 'foo'");
     });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $("<div><span id='hint'>Click me</span></div>").find("#hint");
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.text("Double-click me");
+        }).should.fail("expected '#hint' to have text 'Double-click me', but the text was 'Click me'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.text("Click me");
+        }).should.fail("expected '#hint' not to have text 'Click me'");
+      });
+    });
   });
 
   describe("value", function(){
@@ -431,6 +543,22 @@ describe("jQuery assertions", function(){
       (function(){
         subject.should.not.have.value("foo");
       }).should.fail("expected " + inspect(subject) + " not to have value 'foo'");
+    });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $("<div><input id='email' value='test@test.com'/></div>").find("#email");
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.have.value("expected value");
+        }).should.fail("expected '#email' to have value 'expected value', but the value was 'test@test.com'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.value("test@test.com");
+        }).should.fail("expected '#email' not to have value 'test@test.com'");
+      });
     });
   });
 
@@ -660,6 +788,22 @@ describe("jQuery assertions", function(){
         empty.should.not.be.empty;
       }).should.fail("expected " + inspect(empty) + " not to be empty");
     });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $("<div><span id='container'><hr/></span></div>").find("#container");
+
+      it("shows the selector in the failure message", function() {
+        (function() {
+          subject.should.be.empty;
+        }).should.fail("expected '#container' to be empty");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.find('hr').should.not.be.empty;
+        }).should.fail("expected '#container hr' not to be empty");
+      });
+    });
   });
 
   describe("match", function(){
@@ -754,6 +898,22 @@ describe("jQuery assertions", function(){
       (function(){
         subject.should.not.have.descendants("span");
       }).should.fail("expected " + inspect(subject) + " not to have 'span'");
+    });
+
+    describe("when the jQuery object is the result of a search by selector", function() {
+      var subject = $("<div><span id='container'><br/></span></div>").find("#container");
+
+      it("shows the selector in the failure message of an affirmative assertion", function() {
+        (function() {
+          subject.should.have.descendants(".not-there");
+        }).should.fail("expected '#container' to have '.not-there'");
+      });
+
+      it("shows the selector in the failure message of a negative assertion", function() {
+        (function() {
+          subject.should.not.have.descendants("br");
+        }).should.fail("expected '#container' not to have 'br'");
+      });
     });
   });
 });

@@ -42,6 +42,7 @@
     };
 
   $.fn.inspect = function (depth) {
+    if (this.length === 0) return this.selector;
     var el = $('<div />').append(this.clone());
     if (depth !== undefined) {
       var children = el.children();
@@ -52,17 +53,22 @@
     return el.html();
   };
 
+  function humanize(obj) {
+    return inspect(obj.selector || obj)
+  }
+
   var props = {attr: 'attribute', css: 'CSS property', prop: 'property'};
   for (var prop in props) {
     (function (prop, description) {
       chai.Assertion.addMethod(prop, function (name, val) {
-        var actual = flag(this, 'object')[prop](name);
+        var obj = flag(this, 'object');
+        var actual = obj[prop](name);
 
         if (!flag(this, 'negate') || undefined === val) {
           this.assert(
               undefined !== actual
-            , 'expected #{this} to have a #{exp} ' + description
-            , 'expected #{this} not to have a #{exp} ' + description
+            , 'expected ' + humanize(obj) + ' to have a #{exp} ' + description
+            , 'expected ' + humanize(obj) + ' not to have a #{exp} ' + description
             , name
           );
         }
@@ -70,8 +76,8 @@
         if (undefined !== val) {
           this.assert(
               val === actual
-            , 'expected #{this} to have a ' + inspect(name) + ' ' + description + ' with the value #{exp}, but the value was #{act}'
-            , 'expected #{this} not to have a ' + inspect(name) + ' ' + description + ' with the value #{act}'
+            , 'expected ' + humanize(obj) + ' to have a ' + inspect(name) + ' ' + description + ' with the value #{exp}, but the value was #{act}'
+            , 'expected ' + humanize(obj) + ' not to have a ' + inspect(name) + ' ' + description + ' with the value #{act}'
             , val
             , actual
           );
@@ -95,71 +101,78 @@
   });
 
   chai.Assertion.addMethod('class', function (className) {
+    var obj = flag(this, 'object');
     this.assert(
         flag(this, 'object').hasClass(className)
-      , 'expected #{this} to have class #{exp}'
-      , 'expected #{this} not to have class #{exp}'
+      , 'expected ' + humanize(obj) + ' to have class #{exp}'
+      , 'expected ' + humanize(obj) + ' not to have class #{exp}'
       , className
     );
   });
 
   chai.Assertion.addMethod('id', function (id) {
+    var obj = flag(this, 'object');
     this.assert(
         flag(this, 'object').attr('id') === id
-      , 'expected #{this} to have id #{exp}'
-      , 'expected #{this} not to have id #{exp}'
+      , 'expected ' + humanize(obj) + ' to have id #{exp}'
+      , 'expected ' + humanize(obj) + ' not to have id #{exp}'
       , id
     );
   });
 
   chai.Assertion.addMethod('html', function (html) {
+    var obj = flag(this, 'object');
     var actual = flag(this, 'object').html();
     this.assert(
         actual === html
-      , 'expected #{this} to have HTML #{exp}, but the HTML was #{act}'
-      , 'expected #{this} not to have HTML #{exp}'
+      , 'expected ' + humanize(obj) + ' to have HTML #{exp}, but the HTML was #{act}'
+      , 'expected ' + humanize(obj) + ' not to have HTML #{exp}'
       , html
       , actual
     );
   });
 
   chai.Assertion.addMethod('text', function (text) {
-    var actual = flag(this, 'object').text();
+    var obj = flag(this, 'object');
+    var actual = obj.text();
     this.assert(
         actual === text
-      , 'expected #{this} to have text #{exp}, but the text was #{act}'
-      , 'expected #{this} not to have text #{exp}'
+      , 'expected ' + humanize(obj) + ' to have text #{exp}, but the text was #{act}'
+      , 'expected ' + humanize(obj) + ' not to have text #{exp}'
       , text
       , actual
     );
   });
 
   chai.Assertion.addMethod('value', function (value) {
-    var actual = flag(this, 'object').val();
+    var obj = flag(this, 'object');
+    var actual = obj.val();
     this.assert(
-        flag(this, 'object').val() === value
-      , 'expected #{this} to have value #{exp}, but the value was #{act}'
-      , 'expected #{this} not to have value #{exp}'
+        obj.val() === value
+      , 'expected ' + humanize(obj) + ' to have value #{exp}, but the value was #{act}'
+      , 'expected ' + humanize(obj) + ' not to have value #{exp}'
       , value
       , actual
     );
   });
 
   chai.Assertion.addMethod('descendants', function (selector) {
+    var obj = flag(this, 'object');
     this.assert(
-        flag(this, 'object').has(selector).length > 0
-      , 'expected #{this} to have #{exp}'
-      , 'expected #{this} not to have #{exp}'
+        obj.has(selector).length > 0
+      , 'expected ' + humanize(obj) + ' to have #{exp}'
+      , 'expected ' + humanize(obj) + ' not to have #{exp}'
       , selector
     );
   });
 
   $.each(['visible', 'hidden', 'selected', 'checked', 'enabled', 'disabled'], function (i, attr) {
     chai.Assertion.addProperty(attr, function () {
+      var obj = flag(this, 'object');
       this.assert(
-          flag(this, 'object').is(':' + attr)
-        , 'expected #{this} to be ' + attr
-        , 'expected #{this} not to be ' + attr);
+          obj.is(':' + attr)
+        , 'expected ' + humanize(obj) + ' to be ' + attr
+        , 'expected ' + humanize(obj) + ' not to be ' + attr);
     });
   });
 
@@ -169,8 +182,8 @@
       if (obj instanceof $) {
         this.assert(
             obj.length > 0
-          , 'expected ' + inspect(obj.selector) + ' to exist'
-          , 'expected ' + inspect(obj.selector) + ' not to exist');
+          , 'expected ' + humanize(obj) + ' to exist'
+          , 'expected ' + humanize(obj) + ' not to exist');
       } else {
         _super.apply(this, arguments);
       }
@@ -183,8 +196,8 @@
       if (obj instanceof $) {
         this.assert(
           obj.is(':empty')
-          , 'expected #{this} to be empty'
-          , 'expected #{this} not to be empty');
+          , 'expected ' + humanize(obj) + ' to be empty'
+          , 'expected ' + humanize(obj) + ' not to be empty');
       } else {
         _super.apply(this, arguments);
       }
