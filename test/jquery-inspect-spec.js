@@ -9,7 +9,7 @@ describe("jQuery.fn.inspect", function(){
   });
 
   it("returns the selector when nothing matched", function() {
-    $('something.that-cant-exist').inspect().should.equal('something.that-cant-exist');
-    $('something.that-cant-exist').inspect(42).should.equal('something.that-cant-exist');
+    $('something.that-cant-exist').inspect().should.equal('$("something.that-cant-exist")(length = 0)');
+    $('something.that-cant-exist').inspect(42).should.equal('$("something.that-cant-exist")(length = 0)');
   });
 });

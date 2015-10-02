@@ -88,13 +88,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.attr('contenteditable', 'false');
-        }).should.fail("expected '#close-button' to have a 'contenteditable' attribute with the value 'false', but the value was 'true'");
+        }).should.fail("expected '$(\"#close-button\")(length = 1)' to have a 'contenteditable' attribute with the value 'false', but the value was 'true'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.attr('contenteditable', 'true');
-        }).should.fail("expected '#close-button' not to have a 'contenteditable' attribute with the value 'true'");
+        }).should.fail("expected '$(\"#close-button\")(length = 1)' not to have a 'contenteditable' attribute with the value 'true'");
       });
     });
 
@@ -228,13 +228,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.css('position', 'relative');
-        }).should.fail("expected '#close-button' to have a 'position' CSS property with the value 'relative', but the value was 'absolute'");
+        }).should.fail("expected '$(\"#close-button\")(length = 1)' to have a 'position' CSS property with the value 'relative', but the value was 'absolute'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.css('position', 'absolute');
-        }).should.fail("expected '#close-button' not to have a 'position' CSS property with the value 'absolute'");
+        }).should.fail("expected '$(\"#close-button\")(length = 1)' not to have a 'position' CSS property with the value 'absolute'");
       });
     });
 
@@ -336,13 +336,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.prop('fulfilled');
-        }).should.fail("expected 'input[type=\"checkbox\"]' to have a 'fulfilled' property");
+        }).should.fail("expected '$(\"input[type=\"checkbox\"]\")(length = 1)' to have a 'fulfilled' property");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.prop('checked', true);
-        }).should.fail("expected 'input[type=\"checkbox\"]' not to have a 'checked' property with the value true");
+        }).should.fail("expected '$(\"input[type=\"checkbox\"]\")(length = 1)' not to have a 'checked' property with the value true");
       });
     });
 
@@ -380,13 +380,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.class("label");
-        }).should.fail("expected '#click-button' to have class 'label'");
+        }).should.fail("expected '$(\"#click-button\")(length = 1)' to have class 'label'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.class("hint");
-        }).should.fail("expected '#click-button' not to have class 'hint'");
+        }).should.fail("expected '$(\"#click-button\")(length = 1)' not to have class 'hint'");
       });
     });
   });
@@ -431,13 +431,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.id("click-link");
-        }).should.fail("expected '.hint' to have id 'click-link'");
+        }).should.fail("expected '$(\".hint\")(length = 1)' to have id 'click-link'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.id("click-button");
-        }).should.fail("expected '.hint' not to have id 'click-button'");
+        }).should.fail("expected '$(\".hint\")(length = 1)' not to have id 'click-button'");
       });
     });
   });
@@ -471,13 +471,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.html("Double-click me");
-        }).should.fail("expected '#hint' to have HTML 'Double-click me', but the HTML was 'Click me'");
+        }).should.fail("expected '$(\"#hint\")(length = 1)' to have HTML 'Double-click me', but the HTML was 'Click me'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.html("Click me");
-        }).should.fail("expected '#hint' not to have HTML 'Click me'");
+        }).should.fail("expected '$(\"#hint\")(length = 1)' not to have HTML 'Click me'");
       });
     });
   });
@@ -511,13 +511,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.text("Double-click me");
-        }).should.fail("expected '#hint' to have text 'Double-click me', but the text was 'Click me'");
+        }).should.fail("expected '$(\"#hint\")(length = 1)' to have text 'Double-click me', but the text was 'Click me'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.text("Click me");
-        }).should.fail("expected '#hint' not to have text 'Click me'");
+        }).should.fail("expected '$(\"#hint\")(length = 1)' not to have text 'Click me'");
       });
     });
   });
@@ -551,13 +551,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.have.value("expected value");
-        }).should.fail("expected '#email' to have value 'expected value', but the value was 'test@test.com'");
+        }).should.fail("expected '$(\"#email\")(length = 1)' to have value 'expected value', but the value was 'test@test.com'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.value("test@test.com");
-        }).should.fail("expected '#email' not to have value 'test@test.com'");
+        }).should.fail("expected '$(\"#email\")(length = 1)' not to have value 'test@test.com'");
       });
     });
   });
@@ -751,13 +751,13 @@ describe("jQuery assertions", function(){
     it("fails when the selection is empty", function(){
       (function(){
         nonexistent.should.exist;
-      }).should.fail("expected '#foo' to exist");
+      }).should.fail("expected '$(\"#foo\")(length = 0)' to exist");
     });
 
     it("fails negated when the selection isn't empty", function(){
       (function(){
         existent.should.not.exist;
-      }).should.fail("expected '#mocha' not to exist");
+      }).should.fail("expected '$(\"#mocha\")(length = 1)' not to exist");
     });
   });
 
@@ -795,13 +795,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message", function() {
         (function() {
           subject.should.be.empty;
-        }).should.fail("expected '#container' to be empty");
+        }).should.fail("expected '$(\"#container\")(length = 1)' to be empty");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.find('hr').should.not.be.empty;
-        }).should.fail("expected '#container hr' not to be empty");
+        }).should.fail("expected '$(\"#container hr\")(length = 1)' not to be empty");
       });
     });
   });
@@ -906,13 +906,13 @@ describe("jQuery assertions", function(){
       it("shows the selector in the failure message of an affirmative assertion", function() {
         (function() {
           subject.should.have.descendants(".not-there");
-        }).should.fail("expected '#container' to have '.not-there'");
+        }).should.fail("expected '$(\"#container\")(length = 1)' to have '.not-there'");
       });
 
       it("shows the selector in the failure message of a negative assertion", function() {
         (function() {
           subject.should.not.have.descendants("br");
-        }).should.fail("expected '#container' not to have 'br'");
+        }).should.fail("expected '$(\"#container\")(length = 1)' not to have 'br'");
       });
     });
   });

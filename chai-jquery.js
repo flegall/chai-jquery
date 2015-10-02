@@ -42,7 +42,9 @@
     };
 
   $.fn.inspect = function (depth) {
-    if (this.length === 0) return this.selector;
+    if (this.length === 0) {
+      return formatSelector(this);
+    }
     var el = $('<div />').append(this.clone());
     if (depth !== undefined) {
       var children = el.children();
@@ -53,8 +55,16 @@
     return el.html();
   };
 
+  function formatSelector(obj) {
+    return "$(\"" + obj.selector + "\")(length = " + obj.length +")";
+  }
+
   function humanize(obj) {
-    return inspect(obj.selector || obj)
+    if(obj.selector) {
+      return inspect(formatSelector(obj));
+    } else {
+      return inspect(obj);
+    }
   }
 
   var props = {attr: 'attribute', css: 'CSS property', prop: 'property'};
